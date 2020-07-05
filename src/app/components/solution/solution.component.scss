@@ -1,0 +1,26 @@
+.solutions_cnt {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  text-align: center;
+  padding: 2rem 0;
+
+  &-title {
+    margin-bottom: 2rem;
+  } // solutions_cnt-title
+
+  &-arrow_items {
+    .arrow_item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+
+      .image {
+        width: 30%;
+      } // image
+    } // arrow_item
+  } // solutions_cnt-arrow_items
+} // solutions_cnt

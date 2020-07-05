@@ -2,14 +2,45 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 6.25rem;
 
   &-solution {
     width: 20%;
   } // captcha_cnt
 
-  &-sparks {
+  .sparks_cnt {
     width: 80%;
-  } // captcha_cnt-sparks
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-problem {
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    } // sparks_cnt-problem
+
+    &-success {
+      width: 100%;
+      text-align: center;
+      margin-top: 4rem;
+
+      .message {
+        font-size: 1.25rem;
+        font-weight: 400;
+      } // message
+
+      .btn_content {
+        border: none;
+        padding: 0.5rem 2rem;
+        background: #444;
+        color: white;
+        margin-top: 2rem;
+        cursor: pointer;
+      } // btn_content
+    } // sparks_cnt-success
+  } // sparks_cnt
 } // captcha_cnt

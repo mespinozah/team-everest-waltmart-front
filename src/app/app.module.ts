@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Modules
 import { ComponentsModule } from './components/components.module';
@@ -21,7 +22,14 @@ import { ContentPageComponent } from './pages/content-page/content-page.componen
     CaptchaPageComponent,
     ContentPageComponent,
   ],
-  imports: [BrowserModule, ComponentsModule, AppRoutingModule, ServicesModule],
+  imports: [
+    BrowserModule,
+    ComponentsModule,
+    AppRoutingModule,
+    ServicesModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

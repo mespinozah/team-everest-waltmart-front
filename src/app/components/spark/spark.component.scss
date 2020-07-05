@@ -1,0 +1,49 @@
+.spark_cnt {
+  margin-top: 6.25rem;
+  padding: 3rem;
+
+  .spark_captcha_cnt {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    &-image {
+      width: 100%;
+      transition: ease 1s;
+
+      &.spark_captcha_cnt-image--up {
+        transform: rotate(0deg);
+      } // spark_captcha_cnt-image spark_captcha_cnt-image--up
+
+      &.spark_captcha_cnt-image--right {
+        transform: rotate(90deg);
+      } // spark_captcha_cnt-image spark_captcha_cnt-image--right
+
+      &.spark_captcha_cnt-image--down {
+        transform: rotate(180deg);
+      } // spark_captcha_cnt-image spark_captcha_cnt-image--down
+
+      &.spark_captcha_cnt-image--left {
+        transform: rotate(270deg);
+      } // spark_captcha_cnt-image spark_captcha_cnt-image--left
+    } // spark_captcha_cnt-image
+
+    &-arrow {
+      width: 30px;
+      height: 40px;
+      cursor: pointer;
+
+      .image {
+        width: 30px;
+        height: 40px;
+      } // image
+
+      &.spark_captcha_cnt-arrow--right {
+        .image {
+          transform: rotate(180deg);
+        } // image
+      } // spark_captcha_cnt-arrow spark_captcha_cnt-arrow
+    } // spark_captcha_cnt-arrow
+  } // spark_captcha_cnt
+} // spark_cnt

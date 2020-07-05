@@ -1,1 +1,26 @@
-<p>spark works!</p>
+<section class="spark_cnt">
+  <div class="spark_captcha_cnt">
+    <a class="spark_captcha_cnt-arrow" (click)="changePositionEvent('left')">
+      <img class="image" src="assets/images/arrow.png" />
+    </a>
+
+    <img
+      [ngClass]="{
+        'spark_captcha_cnt-image--up': spark.value === CONST.sparks.pos.up,
+        'spark_captcha_cnt-image--right':
+          spark.value === CONST.sparks.pos.right,
+        'spark_captcha_cnt-image--down': spark.value === CONST.sparks.pos.down,
+        'spark_captcha_cnt-image--left': spark.value === CONST.sparks.pos.left
+      }"
+      class="spark_captcha_cnt-image"
+      src="assets/images/spark.png"
+    />
+
+    <a
+      class="spark_captcha_cnt-arrow spark_captcha_cnt-arrow--right"
+      (click)="changePositionEvent('right')"
+    >
+      <img class="image" src="assets/images/arrow.png" />
+    </a>
+  </div>
+</section>

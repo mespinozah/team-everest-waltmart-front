@@ -1,8 +1,28 @@
 <section class="captcha_cnt">
   <section class="captcha_cnt-solution">
-    <h2>Sellos a decifrars</h2>
+    <app-solution></app-solution>
   </section>
-  <section class="captcha_cnt-sparks">
-    <h2>Descifre los sellos</h2>
+  <section class="sparks_cnt">
+    <h2 class="sparks_cnt-title">Descifre los sellos</h2>
+
+    <div class="sparks_cnt-problem">
+      <ng-container *ngFor="let spark of sparks.controls; let i = index">
+        <app-spark
+          [spark]="spark"
+          [index]="i"
+          (changePosition)="modifiedSpark($event)"
+        ></app-spark>
+      </ng-container>
+    </div>
+
+    <div class="sparks_cnt-success" *ngIf="validateCaptcha()">
+      <p class="message">
+        El sello ha sido liberado. Tienes acceso a ver el contenido detras de la
+        puerta
+      </p>
+      <button class="btn_content">
+        Ver el contenido
+      </button>
+    </div>
   </section>
 </section>
