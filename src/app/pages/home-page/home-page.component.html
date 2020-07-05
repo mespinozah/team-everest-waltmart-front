@@ -1,0 +1,11 @@
+<section class="home_cnt">
+  <h2 class="home_cnt-title">
+    Selecciona una puerta para ver su maravilloso contenido
+  </h2>
+
+  <section class="doors_cnt">
+    <ng-container *ngFor="let door of doors">
+      <app-door [door]="door" (doorSelected)="openDoor($event)"></app-door>
+    </ng-container>
+  </section>
+</section>

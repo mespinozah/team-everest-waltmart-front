@@ -1,0 +1,24 @@
+.door_cnt {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &--img {
+      width: 80%;
+    } // door_cnt-link--img
+  } // door_cnt-link
+
+  &-name {
+    margin-top: 1rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+  } // door_cnt-name
+} // door_cnt

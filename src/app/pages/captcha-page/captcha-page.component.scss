@@ -1,0 +1,15 @@
+.captcha_cnt {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6.25rem;
+
+  &-solution {
+    width: 20%;
+  } // captcha_cnt
+
+  &-sparks {
+    width: 80%;
+  } // captcha_cnt-sparks
+} // captcha_cnt
