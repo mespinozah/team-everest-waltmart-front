@@ -1,1 +1,16 @@
-<p>content-page works!</p>
+<section class="meme_cnt" *ngIf="enabledView; else LOADING">
+  <h2 class="meme_cnt-title">{{ doorSelected }}</h2>
+
+  <p class="meme_cnt-text">
+    Felicidades :D !! Hemos comprobado que eres un ser humano y puedes ver el
+    contenido de esta puerta
+  </p>
+
+  <div class="meme_cnt-meme">
+    <img [src]="meme.meme" />
+  </div>
+</section>
+
+<ng-template #LOADING>
+  <h2>Cargando...</h2>
+</ng-template>

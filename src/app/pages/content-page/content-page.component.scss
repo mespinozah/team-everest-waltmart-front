@@ -1,0 +1,22 @@
+.meme_cnt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  &-title {
+    margin-top: 6.25rem;
+    font-weight: 500;
+  } // meme_cnt-title
+
+  &-text {
+    margin-top: 2rem;
+    width: 50%;
+  } // meme_cnt-text
+
+  &-meme {
+    margin-top: 2rem;
+    width: 100%;
+  } // meme_cnt-meme
+} // meme_cnt

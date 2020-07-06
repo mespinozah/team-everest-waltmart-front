@@ -1,4 +1,8 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '@env/environment';
+import { Captcha, ResponseCaptcha } from '@shared/models';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +13,12 @@ export class CaptchaService {
    */
   private isSuccess: boolean;
 
-  constructor() {
+  /**
+   * Constructor.
+   *
+   * @param http HttpClient de angular.
+   */
+  constructor(private readonly http: HttpClient) {
     this.isSuccess = false;
   }
 
@@ -32,5 +41,26 @@ export class CaptchaService {
    */
   public getState(): boolean {
     return this.isSuccess;
+  }
+
+  /**
+   * Obtiene un captcha de una puerta seleccionada.
+   *
+   * @param door Puerta del captcha.
+   */
+  public getCaptcha(door: string): Observable<Captcha> {
+    let url = `${environment.captchaService.baseUrl}${environment.captchaService.getCaptcha}`;
+    url = url.replace('{door}', door);
+    return this.http.get<Captcha>(url);
+  }
+
+  /**
+   * Llama al servicio para validar el captcha.
+   *
+   * @param captcha Captcha a validar.
+   */
+  public validateCaptcha(captcha: Captcha): Observable<ResponseCaptcha> {
+    const url = `${environment.captchaService.baseUrl}${environment.captchaService.validate}`;
+    return this.http.post<ResponseCaptcha>(url, captcha);
   }
 }

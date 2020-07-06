@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  captchaService: {
+    baseUrl: 'http://localhost:3000/api',
+    getCaptcha: '/captcha/{door}',
+    validate: '/captcha',
+  },
+  contentService: {
+    baseUrl: 'http://localhost:3000/api',
+    getMeme: '/content/{door}',
+  },
 };
 
 /*

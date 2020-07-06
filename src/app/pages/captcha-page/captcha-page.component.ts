@@ -3,11 +3,13 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { DoorService, CaptchaService } from '@shared/services';
 import { Captcha, SparkEvent } from '@shared/models';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-captcha-page',
@@ -15,7 +17,7 @@ import { Captcha, SparkEvent } from '@shared/models';
   styleUrls: ['./captcha-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CaptchaPageComponent implements OnInit {
+export class CaptchaPageComponent implements OnInit, OnDestroy {
   /**
    * Id de la puerta seleccionada.
    */
@@ -37,12 +39,23 @@ export class CaptchaPageComponent implements OnInit {
   public enabledView: boolean;
 
   /**
+   * Observable del captcha.
+   */
+  private getCaptcha$: Subscription;
+
+  /**
+   * Observable del captcha.
+   */
+  private validateCaptcha$: Subscription;
+
+  /**
    * Constructor.
    *
    * @param router Router de angular.
    * @param doorService Servicio de las puertas.
    * @param captchaService Servicio del captcha.
    * @param formBuilder FormBuilder de angular.
+   * @param cdr ChangeDetention de angular.
    */
   constructor(
     private readonly router: Router,
@@ -55,11 +68,19 @@ export class CaptchaPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.buildCapchaDummy();
+    this.getCaptcha();
     this.buildForm();
     this.captchaService.failed();
+  }
 
-    // TODO: eliminar
+  ngOnDestroy(): void {
+    if (!!this.getCaptcha$) {
+      this.getCaptcha$.unsubscribe();
+    }
+
+    if (!!this.validateCaptcha$) {
+      this.validateCaptcha$.unsubscribe();
+    }
   }
 
   private buildForm(): void {
@@ -113,19 +134,52 @@ export class CaptchaPageComponent implements OnInit {
     this.sparks.controls[sparkEvent.index].setValue(sparkEvent.value);
   }
 
-  // TODO: eliminar
-  private buildCapchaDummy() {
+  /**
+   * Obtiene el captcha desde el servicio.
+   */
+  private getCaptcha(): void {
     this.enabledView = false;
+    this.getCaptcha$ = this.captchaService
+      .getCaptcha(this.doorIdSelected)
+      .subscribe(
+        (captcha) => {
+          this.captcha = captcha;
+          this.enabledView = true;
+          this.cdr.detectChanges();
+        },
+        (err) => {
+          console.error('error al traer el captcha', err);
+          this.router.navigateByUrl('/');
+        }
+      );
+  }
 
-    setTimeout(() => {
-      this.captcha = new Captcha();
-      this.captcha.id = '5f011d09b34eb01311efd28a';
-      this.captcha.door = this.doorIdSelected;
-      this.captcha.sparks = [0, 1, 2, 3];
-      this.captcha.alternative = 'DOOR-A-0';
-      this.enabledView = true;
-      this.cdr.detectChanges();
-    }, 2000);
+  /**
+   * Envia el captcha para validarlo.
+   */
+  public sendCaptchaForValidate(): void {
+    let i = 0;
+    const captcha: Captcha = new Captcha();
+    captcha.alternative = this.captcha.alternative;
+    captcha.door = this.captcha.door;
+    captcha.sparks = new Array<number>(4);
+
+    while (i < 4) {
+      captcha.sparks[i] = this.sparks.controls[i].value;
+      i++;
+    }
+
+    this.validateCaptcha$ = this.captchaService
+      .validateCaptcha(captcha)
+      .subscribe(
+        () => {
+          this.router.navigateByUrl('/content');
+        },
+        (err) => {
+          console.error('error al validar el captcha', err);
+          this.router.navigateByUrl('/');
+        }
+      );
   }
 
   /**

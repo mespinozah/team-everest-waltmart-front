@@ -35,8 +35,5 @@ export class DoorService {
    */
   public clean(): void {
     this.door = new Door();
-
-    // TODO: eliminar el seteo de la puerta.
-    this.door.id = 'A';
   }
 }

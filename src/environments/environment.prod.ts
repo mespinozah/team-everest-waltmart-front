@@ -1,3 +1,12 @@
 export const environment = {
-  production: true
+  production: true,
+  captchaService: {
+    baseUrl: '${captchaService.baseUrl}',
+    getCaptcha: '/captcha/{door}',
+    validate: '/captcha',
+  },
+  contentService: {
+    baseUrl: '${captchaService.baseUrl}',
+    getMeme: '/content/{door}',
+  },
 };
