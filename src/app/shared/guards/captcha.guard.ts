@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { DoorService } from '@shared/services';
+import { DoorService, CaptchaService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root',
@@ -11,20 +11,24 @@ export class CaptchaGuard implements CanActivate {
    *
    * @param router Router de angular.
    * @param doorService Servicio de las puertas.
+   * @param captchaService Servicio del captcha.
    */
   constructor(
     private readonly router: Router,
-    private readonly doorService: DoorService
+    private readonly doorService: DoorService,
+    private readonly captchaService: CaptchaService
   ) {}
 
   public canActivate() {
     this.validateSelectedDoor();
 
-    if (true) {
+    if (!this.captchaService.getState()) {
       console.warn('acceso denegado');
       this.router.navigate(['captcha']);
       return false;
     }
+
+    return true;
   }
 
   /**

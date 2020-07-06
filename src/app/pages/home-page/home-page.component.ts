@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Door } from '@shared/models';
-import { DoorService } from '@shared/services';
+import { DoorService, CaptchaService } from '@shared/services';
 
 @Component({
   selector: 'app-home-page',
@@ -19,13 +19,16 @@ export class HomePageComponent implements OnInit {
    *
    * @param router Router de angular.
    * @param doorService Servicio de las puertas.
+   * @param captchaService Servicio del captcha.
    */
   constructor(
     private readonly router: Router,
-    private readonly doorService: DoorService
+    private readonly doorService: DoorService,
+    private readonly captchaService: CaptchaService
   ) {}
 
   ngOnInit(): void {
+    this.captchaService.failed();
     this.doorService.clean();
     this.buildDoors();
   }

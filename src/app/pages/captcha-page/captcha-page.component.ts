@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { DoorService, CaptchaService } from '@shared/services';
@@ -27,6 +32,11 @@ export class CaptchaPageComponent implements OnInit {
   public form: FormGroup;
 
   /**
+   * Valida si se debe mostrar la vista.
+   */
+  public enabledView: boolean;
+
+  /**
    * Constructor.
    *
    * @param router Router de angular.
@@ -38,16 +48,18 @@ export class CaptchaPageComponent implements OnInit {
     private readonly router: Router,
     private readonly doorService: DoorService,
     private readonly captchaService: CaptchaService,
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder,
+    private readonly cdr: ChangeDetectorRef
   ) {
     this.validateSelectedDoor();
   }
 
   ngOnInit(): void {
+    this.buildCapchaDummy();
     this.buildForm();
+    this.captchaService.failed();
 
     // TODO: eliminar
-    this.buildCapchaDummy();
   }
 
   private buildForm(): void {
@@ -103,21 +115,34 @@ export class CaptchaPageComponent implements OnInit {
 
   // TODO: eliminar
   private buildCapchaDummy() {
-    this.captcha = new Captcha();
-    this.captcha.id = '5f011d09b34eb01311efd28a';
-    this.captcha.door = this.doorIdSelected;
-    this.captcha.sparks = [0, 1, 2, 3];
-    this.captcha.alternative = 'DOOR-A-0';
+    this.enabledView = false;
+
+    setTimeout(() => {
+      this.captcha = new Captcha();
+      this.captcha.id = '5f011d09b34eb01311efd28a';
+      this.captcha.door = this.doorIdSelected;
+      this.captcha.sparks = [0, 1, 2, 3];
+      this.captcha.alternative = 'DOOR-A-0';
+      this.enabledView = true;
+      this.cdr.detectChanges();
+    }, 2000);
   }
 
   /**
    * Nos indica si el captcha es válido.
    */
-  public validateCaptcha() {
+  public validateCaptcha(): boolean {
     const spark1 = this.captcha.sparks[0] === this.sparks.controls[0].value;
     const spark2 = this.captcha.sparks[1] === this.sparks.controls[1].value;
     const spark3 = this.captcha.sparks[2] === this.sparks.controls[2].value;
     const spark4 = this.captcha.sparks[3] === this.sparks.controls[3].value;
-    return spark1 && spark2 && spark3 && spark4;
+
+    if (spark1 && spark2 && spark3 && spark4) {
+      this.captchaService.success();
+      return true;
+    } else {
+      this.captchaService.failed();
+      return false;
+    }
   }
 }

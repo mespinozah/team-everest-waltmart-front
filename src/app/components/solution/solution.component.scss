@@ -1,5 +1,5 @@
 .solutions_cnt {
-  border: 1px solid red;
+  border: 1px solid #444;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,6 +9,7 @@
 
   &-title {
     margin-bottom: 2rem;
+    font-weight: 500;
   } // solutions_cnt-title
 
   &-arrow_items {
@@ -18,8 +19,24 @@
       align-items: center;
       padding: 1rem;
 
-      .image {
+      &-image {
         width: 30%;
+
+        &.arrow_item-image--up {
+          transform: rotate(0deg);
+        } // arrow_item-image arrow_item-image--up
+
+        &.arrow_item-image--right {
+          transform: rotate(90deg);
+        } // arrow_item-image arrow_item-image--right
+
+        &.arrow_item-image--down {
+          transform: rotate(180deg);
+        } // arrow_item-image arrow_item-image--down
+
+        &.arrow_item-image--left {
+          transform: rotate(270deg);
+        } // arrow_item-image arrow_item-image--left
       } // image
     } // arrow_item
   } // solutions_cnt-arrow_items

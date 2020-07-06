@@ -1,19 +1,19 @@
 <section class="solutions_cnt">
   <h2 class="solutions_cnt-title">Sello a descifrar</h2>
 
-  <section class="solutions_cnt-arrow_items">
+  <section class="solutions_cnt-arrow_items" *ngFor="let spark of sparks">
     <ng-container>
       <div class="arrow_item">
-        <img class="image" src="assets/images/arrow_bg.png" />
-      </div>
-      <div class="arrow_item">
-        <img class="image" src="assets/images/arrow_bg.png" />
-      </div>
-      <div class="arrow_item">
-        <img class="image" src="assets/images/arrow_bg.png" />
-      </div>
-      <div class="arrow_item">
-        <img class="image" src="assets/images/arrow_bg.png" />
+        <img
+          [ngClass]="{
+            'arrow_item-image--up': spark === CONST.sparks.pos.up,
+            'arrow_item-image--right': spark === CONST.sparks.pos.right,
+            'arrow_item-image--down': spark === CONST.sparks.pos.down,
+            'arrow_item-image--left': spark === CONST.sparks.pos.left
+          }"
+          class="arrow_item-image"
+          src="assets/images/arrow_bg.png"
+        />
       </div>
     </ng-container>
   </section>

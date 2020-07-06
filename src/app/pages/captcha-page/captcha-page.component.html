@@ -1,6 +1,6 @@
-<section class="captcha_cnt">
+<section class="captcha_cnt" *ngIf="enabledView; else LOADING">
   <section class="captcha_cnt-solution">
-    <app-solution></app-solution>
+    <app-solution [sparks]="captcha.sparks"></app-solution>
   </section>
   <section class="sparks_cnt">
     <h2 class="sparks_cnt-title">Descifre los sellos</h2>
@@ -26,3 +26,7 @@
     </div>
   </section>
 </section>
+
+<ng-template #LOADING>
+  <h2>Cargando...</h2>
+</ng-template>
